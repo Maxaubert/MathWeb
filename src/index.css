@@ -15,6 +15,150 @@ html, body {
   border-bottom: none !important;
 }
 
+/* Concept Cards - Simple hover effects and selection */
+.concept-grid button {
+  transition: all 0.2s ease !important;
+  position: relative !important;
+}
+
+.concept-grid button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Selected state - purple accent */
+.concept-grid button.border-white\/30 {
+  border-color: #8b5cf6 !important;
+  background: rgba(139, 92, 246, 0.15) !important;
+}
+
+.concept-grid button.border-white\/30:hover {
+  border-color: #a855f7 !important;
+  background: rgba(139, 92, 246, 0.2) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3) !important;
+}
+
+/* Force hover effects with higher specificity */
+.concept-grid .group.flex.items-center.gap-3.rounded-xl.border.p-3.text-left.transition:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Force selected state with higher specificity */
+.concept-grid .group.flex.items-center.gap-3.rounded-xl.border.p-3.text-left.transition.border-white\/30 {
+  border-color: #8b5cf6 !important;
+  background: rgba(139, 92, 246, 0.15) !important;
+}
+
+.concept-grid .group.flex.items-center.gap-3.rounded-xl.border.p-3.text-left.transition.border-white\/30:hover {
+  border-color: #a855f7 !important;
+  background: rgba(139, 92, 246, 0.2) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3) !important;
+}
+
+/* Proper hover effects for concept cards */
+.concept-grid {
+  padding-top: 8px !important;
+  margin-top: 8px !important;
+}
+
+.concept-grid button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.concept-grid button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Selected state styling */
+.concept-grid button.border-white\/30 {
+  border-color: #8b5cf6 !important;
+  background: rgba(139, 92, 246, 0.15) !important;
+}
+
+.concept-grid button.border-white\/30:hover {
+  border-color: #a855f7 !important;
+  background: rgba(139, 92, 246, 0.2) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3) !important;
+}
+
+/* Store purple color consistency - match concept card accents */
+.text-purple-400 {
+  color: #8b5cf6 !important;
+}
+
+.bg-purple-400\/10 {
+  background-color: rgba(139, 92, 246, 0.1) !important;
+}
+
+.bg-purple-400\/20 {
+  background-color: rgba(139, 92, 246, 0.2) !important;
+}
+
+.border-purple-400\/20 {
+  border-color: rgba(139, 92, 246, 0.2) !important;
+}
+
+.border-purple-400\/30 {
+  border-color: rgba(139, 92, 246, 0.3) !important;
+}
+
+.border-purple-400\/40 {
+  border-color: rgba(139, 92, 246, 0.4) !important;
+}
+
+/* Store hover states */
+.hover\:bg-purple-400\/30:hover {
+  background-color: rgba(139, 92, 246, 0.3) !important;
+}
+
+/* Store balance and boost sections */
+.bg-purple-400\/10 {
+  background-color: rgba(139, 92, 246, 0.1) !important;
+}
+
+/* Store modal background - dark black transparent with subtle blue hint */
+.bg-white\/10.backdrop-blur-md {
+  background: rgba(9, 6, 18, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(30, 58, 138, 0.2) !important;
+}
+
+/* Alternative selector for store modal */
+.relative.w-full.max-w-2xl.mx-4.bg-white\/10.backdrop-blur-md.border.border-white\/20.rounded-2xl.p-6 {
+  background: rgba(9, 6, 18, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(30, 58, 138, 0.2) !important;
+}
+
+/* Store item cards - simple base styling */
+.p-4.border.rounded-xl.transition-colors {
+  background: rgba(51, 65, 85, 0.8) !important;
+  border: 2px solid rgba(139, 92, 246, 0.15) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+  transition: all 0.3s ease !important;
+}
+
+.p-4.border.rounded-xl.transition-colors:hover {
+  background: rgba(51, 65, 85, 0.9) !important;
+  border-color: rgba(139, 92, 246, 0.25) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Store grid - add padding to prevent clipping */
+.grid.grid-cols-1.md\:grid-cols-2.gap-4.mb-6 {
+  padding-top: 8px !important;
+  margin-top: 8px !important;
+}
+
 /* Fix mobile overscroll background */
 html {
   background: linear-gradient(160deg, #1b1026, #090612);
@@ -1492,3 +1636,5 @@ html {
 * {
   scrollbar-width: none;
 }
+
+

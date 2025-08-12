@@ -293,11 +293,18 @@ function Header({ coins, setCoins, ownedItems, setOwnedItems, activeBoosts, setA
                     const hasBoost = item.boostType && activeBoosts[item.boostType]?.level > 0;
                     const isOwned = !item.boostType && ownedItems.includes(item.name);
                     return (
-                                             <div key={index} className={`p-4 border rounded-xl transition-colors ${
+                                             <div key={index} className={`p-4 rounded-xl transition-colors ${
                          hasBoost || isOwned
-                           ? "border-purple-400/40 bg-purple-400/10" 
-                           : "border-white/20 bg-white/5 hover:bg-white/10"
-                       }`}>
+                           ? "bg-purple-400/10" 
+                           : "bg-white/5 hover:bg-white/10"
+                       }`}
+                       style={isOwned ? {
+                         background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(168, 85, 247, 0.1))',
+                         border: '2px solid rgba(139, 92, 246, 0.4)',
+                         boxShadow: '0 4px 16px rgba(139, 92, 246, 0.2)'
+                       } : {
+                         border: hasBoost ? '1px solid rgba(139, 92, 246, 0.4)' : '1px solid rgba(255, 255, 255, 0.2)'
+                       }}>
                         <div className="flex items-start justify-between mb-2">
                           <div className="text-2xl">{item.icon}</div>
                           <div className="flex items-center gap-2">
@@ -307,16 +314,24 @@ function Header({ coins, setCoins, ownedItems, setOwnedItems, activeBoosts, setA
                                </div>
                              )}
                                                          {isOwned && (
-                               <div className="px-2 py-1 bg-purple-400/20 border border-purple-400/40 rounded text-xs text-purple-400 font-medium">
+                               <div className="px-2 py-1 rounded text-xs font-medium"
+                                    style={{
+                                      background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(168, 85, 247, 0.25))',
+                                      border: '1px solid rgba(139, 92, 246, 0.6)',
+                                      color: '#ffffff',
+                                      fontWeight: '600',
+                                      textShadow: '0 1px 2px rgba(0, 0, 0, 0.4)',
+                                      boxShadow: '0 3px 10px rgba(139, 92, 246, 0.4)'
+                                    }}>
                                  OWNED
                                </div>
                              )}
-                                                         <div className="font-semibold text-purple-400">
+                                                         <div className="font-semibold" style={isOwned ? { color: '#fef3c7' } : { color: '#a855f7' }}>
                                {isOwned ? "" : item.price}
                              </div>
                           </div>
                         </div>
-                        <div className="font-semibold mb-1">{item.name}</div>
+                        <div className="font-semibold mb-1" style={isOwned ? { color: '#fef3c7' } : {}}>{item.name}</div>
                         <div className="text-sm text-white/60 mb-3">{item.description}</div>
                         {!isOwned ? (
                           <button 
@@ -330,11 +345,7 @@ function Header({ coins, setCoins, ownedItems, setOwnedItems, activeBoosts, setA
                           >
                             {coins >= item.price ? "Purchase" : "Not enough coins"}
                           </button>
-                        ) : (
-                                                     <div className="w-full py-2 px-3 rounded-lg text-sm font-medium text-center text-purple-400 bg-purple-400/20 border border-purple-400/40">
-                             ✓ Owned
-                           </div>
-                        )}
+                        ) : null}
                       </div>
                     );
                   })}

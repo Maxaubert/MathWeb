@@ -8,9 +8,754 @@ html, body {
   max-width: 100vw;
 }
 
+/* Fix mobile overscroll background */
+html {
+  background: linear-gradient(160deg, #1b1026, #090612);
+  min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height for mobile */
+}
+
+body {
+  background: linear-gradient(160deg, #1b1026, #090612);
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
 /* Ensure all elements stay within viewport */
 * {
   box-sizing: border-box;
+}
+
+/* Handle mobile overscroll */
+@media (max-width: 768px) {
+  html, body {
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Extend background for overscroll areas */
+  #root::before {
+    content: '';
+    position: fixed;
+    top: -100vh;
+    left: 0;
+    right: 0;
+    bottom: -100vh;
+    background: linear-gradient(160deg, #1b1026, #090612);
+    z-index: -1;
+    pointer-events: none;
+  }
+}
+
+/* Mobile Navigation - Hamburger Menu */
+@media (max-width: 768px) {
+  /* Hide the regular navigation on mobile */
+  .nav-items {
+    display: none !important;
+  }
+  
+  /* Show hamburger button */
+  .hamburger-menu {
+    display: block !important;
+    position: relative !important;
+    z-index: 50 !important;
+  }
+  
+  /* Hamburger button styling */
+  .hamburger-button {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-around !important;
+    width: 24px !important;
+    height: 20px !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    z-index: 50 !important;
+  }
+  
+  /* Hamburger lines */
+  .hamburger-line {
+    width: 100% !important;
+    height: 2px !important;
+    background: white !important;
+    border-radius: 1px !important;
+    transition: all 0.3s ease !important;
+    transform-origin: center !important;
+  }
+  
+  /* Animated hamburger when open */
+  .hamburger-button.open .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px) !important;
+  }
+  
+  .hamburger-button.open .hamburger-line:nth-child(2) {
+    opacity: 0 !important;
+  }
+  
+  .hamburger-button.open .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px) !important;
+  }
+  
+  /* Mobile navigation backdrop overlay */
+  .mobile-nav-backdrop {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    z-index: 999 !important;
+  }
+  
+  /* Mobile navigation slide-out panel */
+  .mobile-nav-menu {
+    position: fixed !important;
+    top: 0 !important;
+    right: -300px !important;
+    width: 300px !important;
+    height: 100vh !important;
+    background: linear-gradient(180deg, #2a1b3d 0%, #1f1429 100%) !important;
+    border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
+    z-index: 1000 !important;
+    transition: right 0.3s ease !important;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3) !important;
+    overflow-y: auto !important;
+    backdrop-filter: blur(10px) !important;
+  }
+  
+  /* Custom scrollbar for mobile menu */
+  .mobile-nav-menu::-webkit-scrollbar {
+    width: 6px !important;
+  }
+  
+  .mobile-nav-menu::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-radius: 3px !important;
+  }
+  
+  .mobile-nav-menu::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(139, 92, 246, 0.6), rgba(168, 85, 247, 0.4)) !important;
+    border-radius: 3px !important;
+    transition: all 0.3s ease !important;
+  }
+  
+  .mobile-nav-menu::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(139, 92, 246, 0.8), rgba(168, 85, 247, 0.6)) !important;
+  }
+  
+  /* For Firefox */
+  .mobile-nav-menu {
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(139, 92, 246, 0.6) rgba(255, 255, 255, 0.05) !important;
+  }
+  
+  .mobile-nav-menu.open {
+    right: 0 !important;
+  }
+  
+  /* Mobile navigation header */
+  .mobile-nav-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 1.5rem 2rem !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    backdrop-filter: blur(8px) !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  
+  /* Subtle soft background effect for header */
+  .mobile-nav-header::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    z-index: -1 !important;
+  }
+  
+  .mobile-nav-title {
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    color: white !important;
+    margin: 0 !important;
+  }
+  
+  .mobile-nav-close {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    font-size: 1.25rem !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    cursor: pointer !important;
+    padding: 0.5rem !important;
+    border-radius: 8px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    width: 36px !important;
+    height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  
+  /* Add subtle background effect */
+  .mobile-nav-close::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05)) !important;
+    opacity: 0 !important;
+    transition: opacity 0.3s ease !important;
+  }
+  
+  .mobile-nav-close:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    transform: scale(1.05) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  }
+  
+  .mobile-nav-close:hover::before {
+    opacity: 1 !important;
+  }
+  
+  /* Mobile navigation items */
+  .mobile-nav-items {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+    padding: 2rem 0 !important;
+  }
+  
+  .mobile-nav-items a {
+    color: white !important;
+    text-decoration: none !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    padding: 1.25rem 2rem !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    background: transparent !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  
+  /* Add subtle left border indicator */
+  .mobile-nav-items a::before {
+    content: '' !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 2px !important;
+    height: 100% !important;
+    background: rgba(255, 255, 255, 0.3) !important;
+    transform: scaleY(0) !important;
+    transition: transform 0.3s ease !important;
+    transform-origin: bottom !important;
+  }
+  
+  .mobile-nav-items a:hover::before,
+  .mobile-nav-items a.active::before {
+    transform: scaleY(1) !important;
+  }
+  
+  .mobile-nav-items a:hover,
+  .mobile-nav-items a.active {
+    background: rgba(255, 255, 255, 0.06) !important;
+    color: white !important;
+    transform: translateX(3px) !important;
+    box-shadow: none !important;
+  }
+  
+  /* Add arrow to navigation items with better styling */
+  .mobile-nav-items a::after {
+    content: '→' !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    font-weight: bold !important;
+    font-size: 1.1rem !important;
+    transition: all 0.3s ease !important;
+    opacity: 0.7 !important;
+  }
+  
+  .mobile-nav-items a:hover::after,
+  .mobile-nav-items a.active::after {
+    color: #a855f7 !important;
+    opacity: 1 !important;
+    transform: translateX(3px) !important;
+  }
+  
+  /* Hide NO BOOSTS capsule on mobile */
+  .header-container .flex.items-center.justify-between > div:last-child > div:nth-child(2) {
+    display: none !important;
+  }
+  
+  /* Optimize header for mobile */
+  .header-container {
+    padding: 0.5rem !important;
+  }
+  
+  /* Ensure logo and hamburger are properly spaced */
+  .header-container .flex.items-center.justify-between > div:first-child {
+    margin-right: auto !important;
+  }
+  
+  .header-container .flex.items-center.justify-between > div:last-child {
+    margin-left: auto !important;
+  }
+  
+  /* Position hamburger at the very right corner */
+  .hamburger-menu {
+    margin-left: auto !important;
+  }
+  
+  /* Ensure proper spacing between account capsules and hamburger */
+  .header-container .flex.items-center.justify-between > div:last-child {
+    gap: 0.5rem !important;
+  }
+  
+  /* Fix flashcard and practice content clipping on mobile */
+  /* Fix explainer/flashcard box sizing and text visibility */
+  .explainer-box, .flashcard-box, .explainer-container {
+    width: 100% !important;
+    height: 400px !important; /* Much taller to show content */
+    min-height: 400px !important;
+    max-height: 400px !important; /* Force taller height */
+    overflow: visible !important;
+    padding: 1.5rem !important;
+    margin: 1rem 0 !important;
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+    flex-shrink: 0 !important; /* Prevent shrinking */
+    flex-grow: 0 !important; /* Prevent growing */
+    position: relative !important; /* Ensure proper positioning */
+    z-index: 10 !important; /* Bring above other content */
+  }
+  
+  /* Target the actual Flashcard component from React */
+  .Flashcard, [class*="Flashcard"], [class*="flashcard"] {
+    height: 400px !important;
+    min-height: 400px !important;
+    max-height: 400px !important;
+    overflow: visible !important;
+  }
+  
+  /* Target the Flashcard container div */
+  .Flashcard > div, [class*="Flashcard"] > div, [class*="flashcard"] > div {
+    height: 400px !important;
+    min-height: 400px !important;
+    max-height: 400px !important;
+    overflow: visible !important;
+  }
+  
+  /* Target the content inside the flashcard */
+  .flex.h-full.flex-col.justify-between {
+    height: 100% !important;
+    min-height: 350px !important;
+    overflow-y: auto !important; /* Make it scrollable */
+    padding: 1rem !important;
+    max-height: 350px !important; /* Limit height to enable scrolling */
+  }
+  
+  /* Ensure the flashcard container allows scrolling */
+  .Flashcard > div, [class*="Flashcard"] > div, [class*="flashcard"] > div {
+    height: 400px !important;
+    min-height: 400px !important;
+    max-height: 400px !important;
+    overflow: hidden !important; /* Hide overflow on container */
+  }
+  
+  /* Target the actual content area that's being hidden */
+  .explainer-content, .flashcard-content, .explanation-content {
+    height: 350px !important; /* Tall enough to show content */
+    min-height: 350px !important;
+    max-height: 350px !important;
+    overflow: visible !important;
+    padding: 1rem !important;
+    margin: 0 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: rgba(255, 255, 255, 0.05) !important; /* Slight background to see the area */
+  }
+  
+  /* Force the flashcard section to have a fixed size */
+  .flashcard-section, .explainer-section {
+    height: auto !important;
+    min-height: 450px !important; /* Taller to accommodate the content box */
+    max-height: none !important;
+    flex: 0 0 auto !important; /* Don't flex, use natural size */
+    margin-bottom: 2rem !important; /* Space below the section */
+    position: relative !important;
+    z-index: 5 !important;
+  }
+  
+  /* Ensure proper spacing between flashcard and practice sections */
+  .flashcard-section + .practice-section,
+  .explainer-section + .practice-section {
+    margin-top: 2rem !important;
+    clear: both !important;
+  }
+  
+  /* Ensure text content is visible */
+  .explainer-text, .flashcard-text, .explanation-content {
+    overflow: visible !important;
+    max-width: 100% !important;
+    word-wrap: break-word !important;
+    white-space: normal !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+  }
+  
+  /* Fix any collapsed/expanded sections */
+  .collapsed-section, .expanded-section {
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
+  }
+  
+  /* Fix the specific visualization grid that's clipping */
+  .visualization-grid, .practice-visualization {
+    overflow: visible !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 300px !important;
+    padding: 1rem !important;
+    margin: 0 !important;
+  }
+  
+  /* Target the specific grid that's clipping at the bottom */
+  .grid, .coordinate-grid, .vector-grid {
+    height: auto !important;
+    min-height: 400px !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding-bottom: 2rem !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  /* Fix any fixed height containers */
+  [style*="height"], [style*="max-height"] {
+    height: auto !important;
+    max-height: none !important;
+  }
+  
+  /* Override the inline style calc(100% - 2rem) */
+  [style*="calc(100% - 2rem)"] {
+    height: 400px !important;
+    min-height: 400px !important;
+    max-height: 400px !important;
+  }
+  
+  /* Target any element with calc height */
+  [style*="calc"] {
+    height: 400px !important;
+    min-height: 400px !important;
+    max-height: 400px !important;
+  }
+  
+  /* Target the practice container specifically */
+  .practice-container, .practice-wrapper {
+    height: auto !important;
+    min-height: 500px !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding-bottom: 2rem !important;
+  }
+  
+  /* Ensure the canvas or SVG elements don't clip */
+  canvas, svg {
+    max-width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  
+  /* Fix any flex containers that might be causing clipping */
+  .flex-container, .grid-container {
+    overflow: visible !important;
+    max-width: 100% !important;
+    flex-wrap: wrap !important;
+  }
+  
+  /* Force all grid-related elements to be visible */
+  [class*="grid"], [class*="visualization"], [class*="practice"] {
+    height: auto !important;
+    min-height: 300px !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  
+  /* Target any div that might contain the grid */
+  div[class*="grid"], div[class*="visualization"] {
+    height: auto !important;
+    min-height: 350px !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding-bottom: 1rem !important;
+  }
+  
+  /* Mobile layout optimization - stretch content closer to edges */
+  main {
+    max-width: 98% !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+  
+  /* Stretch concept cards grid to edges on mobile */
+  .concept-grid {
+    padding: 0 0.25rem !important;
+    gap: 0.75rem !important;
+  }
+  
+  /* Stretch main panels to edges on mobile */
+  .main-panels {
+    padding: 0 0.25rem !important;
+    gap: 1.5rem !important;
+  }
+  
+  /* Reduce padding on flashcard and practice sections for mobile */
+  .flashcard-section, .explainer-section, .practice-section {
+    padding: 0 0.25rem !important;
+  }
+  
+  /* Stretch flashcard and practice boxes to edges */
+  .explainer-box, .flashcard-box, .explainer-container {
+    padding: 1rem !important;
+    margin: 0.5rem 0 !important;
+  }
+  
+  /* Ensure content inside boxes uses more width */
+  .explainer-content, .flashcard-content, .explanation-content {
+    padding: 0.75rem !important;
+  }
+  
+  /* Stretch visualization areas to edges */
+  .visualization-grid, .practice-visualization, .grid, .coordinate-grid, .vector-grid {
+    padding: 0.5rem !important;
+    margin: 0 !important;
+  }
+  
+  /* Mobile Store Optimization - Fix clipping and layout issues */
+  /* Store modal overlay */
+  .fixed.inset-0.z-50.flex.items-center.justify-center.bg-black\/80.backdrop-blur-md {
+    padding: 1rem !important;
+    align-items: flex-start !important;
+    padding-top: 1rem !important;
+  }
+  
+  /* Store modal container */
+  .relative.w-full.max-w-2xl.mx-4.bg-white\/10.backdrop-blur-md.border.border-white\/20.rounded-2xl.p-6 {
+    margin: 0 !important;
+    max-width: 95% !important;
+    width: 100% !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+    padding: 1rem !important;
+    margin-top: 0.5rem !important;
+  }
+  
+  /* Store header */
+  .flex.items-center.justify-between.mb-6 {
+    margin-bottom: 1rem !important;
+    padding: 0.5rem 0 !important;
+  }
+  
+  /* Store balance section */
+  .mb-6.p-4.bg-purple-400\/10.border.border-purple-400\/20.rounded-xl {
+    margin-bottom: 1rem !important;
+    padding: 0.75rem !important;
+  }
+  
+  /* Store items grid */
+  .grid.grid-cols-1.md\:grid-cols-2.gap-4.mb-6 {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  /* Individual store item cards */
+  .p-4.border.rounded-xl.transition-colors {
+    padding: 0.75rem !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+  
+  /* Store item content */
+  .flex.items-start.justify-between.mb-2 {
+    margin-bottom: 0.5rem !important;
+  }
+  
+  /* Store item description */
+  .text-sm.text-white\/60.mb-3 {
+    margin-bottom: 0.75rem !important;
+    font-size: 0.875rem !important;
+    line-height: 1.4 !important;
+  }
+  
+  /* Store buttons */
+  .w-full.py-2.px-3.rounded-lg.text-sm.font-medium.transition-colors {
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.875rem !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+  }
+  
+  /* Store status labels */
+  .px-2.py-1.bg-yellow-400\/20.border.border-yellow-400\/40.rounded.text-xs.text-yellow-400.font-medium,
+  .px-2.py-1.bg-purple-400\/20.border.border-purple-400\/40.rounded.text-xs.text-purple-400.font-medium {
+    font-size: 0.75rem !important;
+    padding: 0.25rem 0.5rem !important;
+    white-space: nowrap !important;
+  }
+  
+  /* Store price display */
+  .font-semibold.text-purple-400 {
+    font-size: 0.875rem !important;
+  }
+  
+  /* Active boosts section */
+  .mb-6.p-4.bg-purple-400\/10.border.border-purple-400\/20.rounded-xl:last-child {
+    margin-bottom: 0 !important;
+    padding: 0.75rem !important;
+  }
+  
+  /* Ensure store modal is properly positioned on mobile */
+  .fixed.inset-0.z-50 {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    z-index: 50 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  /* Store modal scroll container */
+  .relative.w-full.max-w-2xl.mx-4.bg-white\/10.backdrop-blur-md.border.border-white\/20.rounded-2xl.p-6 {
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  /* Fix any store text overflow */
+  .text-2xl, .text-xl, .text-lg {
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+  
+  /* Ensure store icons don't overflow */
+  .text-2xl {
+    font-size: 1.5rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  /* Store container and cards */
+  .store-container, .store-section, [class*="store"], [class*="Store"] {
+    padding: 0 0.25rem !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    max-width: 100% !important;
+  }
+  
+  /* Store cards and items */
+  .store-card, .store-item, [class*="store-card"], [class*="store-item"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0.5rem 0 !important;
+    padding: 1rem !important;
+    overflow: visible !important;
+    position: relative !important;
+    z-index: 5 !important;
+  }
+  
+  /* Store grid layout */
+  .store-grid, [class*="store-grid"] {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+  
+  /* Store item content */
+  .store-item-content, [class*="store-item-content"] {
+    padding: 0.75rem !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    max-width: 100% !important;
+  }
+  
+  /* Store buttons */
+  .store-button, .store-btn, [class*="store-button"], [class*="store-btn"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0.75rem 1rem !important;
+    margin: 0.5rem 0 !important;
+    overflow: visible !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+  }
+  
+  /* Store status labels */
+  .store-status, .store-label, [class*="store-status"], [class*="store-label"] {
+    position: relative !important;
+    z-index: 10 !important;
+    overflow: visible !important;
+    max-width: 100% !important;
+  }
+  
+  /* Store icons */
+  .store-icon, [class*="store-icon"] {
+    max-width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  
+  /* Store text content */
+  .store-text, .store-description, [class*="store-text"], [class*="store-description"] {
+    overflow: visible !important;
+    max-width: 100% !important;
+    word-wrap: break-word !important;
+    white-space: normal !important;
+  }
+  
+  /* Store price/cost elements */
+  .store-price, .store-cost, [class*="store-price"], [class*="store-cost"] {
+    overflow: visible !important;
+    max-width: 100% !important;
+    word-wrap: break-word !important;
+  }
+  
+  /* Ensure store sections don't clip at top */
+  .store-section, [class*="store-section"] {
+    margin-top: 1rem !important;
+    padding-top: 0.5rem !important;
+    overflow: visible !important;
+    position: relative !important;
+    z-index: 5 !important;
+  }
+  
+  /* Fix any store containers that might be clipped */
+  [class*="store"], [class*="Store"] {
+    overflow: visible !important;
+    max-width: 100% !important;
+    position: relative !important;
+    z-index: 5 !important;
+  }
 }
 
 /* Prevent main container overflow */
@@ -59,4 +804,512 @@ button, .card {
 .overflow-y-auto {
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+/* Custom scrollbar for flashcard content */
+.flex.h-full.flex-col.justify-between::-webkit-scrollbar {
+  width: 6px;
+}
+
+.flex.h-full.flex-col.justify-between::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.flex.h-full.flex-col.justify-between::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.flex.h-full.flex-col.justify-between::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Default navigation spacing for all devices */
+.custom-nav-gap {
+  gap: 4rem; /* Default spacing (equivalent to gap-16) */
+}
+
+
+
+/* iPad Landscape Optimization - Target actual iPad dimensions */
+@media (min-width: 768px) and (max-width: 1200px) {
+  
+  /* Optimize header spacing for iPad landscape */
+  .header-container {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+  
+  /* Override the custom navigation gap for iPad landscape */
+  .custom-nav-gap {
+    gap: 1.3rem !important; /* Tighter spacing for iPad landscape */
+  }
+  
+  /* Also target the nav-items class for extra specificity */
+  .nav-items.custom-nav-gap {
+    gap: 1.3rem !important;
+  }
+  
+  /* Force override by targeting the exact element */
+  .header-container nav.custom-nav-gap {
+    gap: 1.3rem !important;
+  }
+  
+  /* Nuclear option - override any gap property */
+  .header-container .custom-nav-gap,
+  .header-container .nav-items.custom-nav-gap {
+    gap: 1.3rem !important;
+    --tw-gap-x: 1.3rem !important;
+    --tw-gap-y: 1.3rem !important;
+  }
+  
+  /* Adjust main content spacing for better iPad layout */
+  main {
+    max-width: 90% !important; /* Slightly wider on iPad */
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+  
+  /* Optimize concept cards grid for iPad */
+  .concept-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 1rem !important;
+  }
+  
+  /* Make the two main panels more balanced on iPad */
+  .main-panels {
+    gap: 1.5rem !important;
+  }
+  
+  /* Optimize header logo and account spacing */
+  .header-container .flex.items-center.justify-between > div:first-child {
+    margin-right: 1rem !important;
+  }
+  
+  .header-container .flex.items-center.justify-between > div:last-child {
+    margin-left: 1rem !important;
+  }
+  
+  /* Ensure navigation is perfectly centered */
+  .nav-items {
+    position: absolute !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: auto !important;
+  }
+}
+
+/* Additional specific targeting for your iPad dimensions */
+@media (min-width: 1180px) and (max-width: 1180px) {
+  .header-container .custom-nav-gap {
+    border: 3px solid lime !important; /* Green border for exact width match */
+    gap: 1.3rem !important;
+  }
+}
+
+/* Specific targeting for iPad Pro 11" Portrait (834px width) */
+@media (min-width: 834px) and (max-width: 834px) and (orientation: portrait) {
+  .header-container {
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
+  }
+  
+  .custom-nav-gap {
+    gap: 0.25rem !important; /* Extremely tight spacing for iPad Pro 11" */
+  }
+  
+  .nav-items {
+    gap: 0.25rem !important;
+  }
+  
+  .nav-items a {
+    font-size: 0.8rem !important; /* Even smaller text */
+    padding: 0.375rem 0.5rem !important; /* Very tight padding */
+  }
+  
+  /* Reduce logo and account spacing even more */
+  .header-container .flex.items-center.justify-between > div:first-child {
+    margin-right: 0.125rem !important;
+  }
+  
+  .header-container .flex.items-center.justify-between > div:last-child {
+    margin-left: 0.125rem !important;
+  }
+  
+  /* Hide the NO BOOSTS capsule in portrait to save space */
+  .header-container .flex.items-center.justify-between > div:last-child > div:nth-child(2) {
+    display: none !important;
+  }
+  
+  /* Move coins/store capsule above Your Account in portrait */
+  .header-container .flex.items-center.justify-between > div:last-child {
+    flex-direction: column-reverse !important;
+    align-items: flex-end !important;
+    gap: 0.25rem !important;
+    position: relative !important;
+    top: 0.75rem !important; /* Move capsules down relative to their container */
+  }
+  
+  /* Ensure the account capsules don't take up too much horizontal space */
+  .header-container .flex.items-center.justify-between > div:last-child > div {
+    margin: 0 !important;
+  }
+}
+
+/* iPad Portrait Optimization - Fix navigation and content clipping */
+@media (min-width: 768px) and (max-width: 1366px) and (orientation: portrait) {
+  /* Optimize navigation for portrait */
+  .header-container {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+  
+  /* Compact navigation for portrait - stack items vertically if needed */
+  .custom-nav-gap {
+    gap: 0.5rem !important; /* Very tight spacing */
+  }
+  
+  /* Ensure navigation fits properly in portrait */
+  .nav-items {
+    position: relative !important; /* Remove absolute positioning for portrait */
+    left: auto !important;
+    transform: none !important;
+    width: auto !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important; /* Allow wrapping if needed */
+    gap: 0.5rem !important; /* Override any other gap */
+    top: -0.8125rem !important; /* Move nav items up 5px more towards the top */
+  }
+  
+  /* Make navigation text smaller on portrait */
+  .nav-items a {
+    font-size: 0.875rem !important; /* Slightly smaller text */
+    padding: 0.5rem 0.75rem !important; /* Tighter padding */
+    white-space: nowrap !important; /* Prevent text wrapping */
+  }
+  
+  /* Reduce logo size slightly for portrait */
+  .header-container .flex.items-center.justify-between > div:first-child {
+    margin-right: 0.25rem !important;
+  }
+  
+  .header-container .flex.items-center.justify-between > div:last-child {
+    margin-left: 0.25rem !important;
+  }
+  
+  /* Ensure header doesn't get too tall */
+  .header-container {
+    min-height: auto !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+  
+  /* Hide the NO BOOSTS capsule in portrait to save space */
+  .header-container .flex.items-center.justify-between > div:last-child > div:nth-child(2) {
+    display: none !important;
+  }
+  
+  /* Move coins/store capsule above Your Account in portrait */
+  .header-container .flex.items-center.justify-between > div:last-child {
+    flex-direction: column-reverse !important;
+    align-items: flex-end !important;
+    gap: 0.25rem !important;
+    position: relative !important;
+    top: 0.75rem !important; /* Move capsules down relative to their container */
+  }
+  
+  /* Ensure the account capsules don't take up too much horizontal space */
+  .header-container .flex.items-center.justify-between > div:last-child > div {
+    margin: 0 !important;
+  }
+  
+  /* Fix main content clipping */
+  main {
+    max-width: 95% !important; /* Wider on portrait to prevent clipping */
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    overflow: visible !important; /* Prevent clipping */
+  }
+  
+  /* Fix concept cards grid for portrait */
+  .concept-grid {
+    grid-template-columns: repeat(2, 1fr) !important; /* 2 columns for portrait */
+    gap: 1.5rem !important;
+    padding: 0 1rem !important;
+  }
+  
+  /* Fix practice section clipping */
+  .main-panels {
+    gap: 2rem !important;
+    padding: 0 1rem !important;
+    overflow: visible !important;
+    align-items: flex-start !important; /* Align items to top */
+  }
+  
+  /* Ensure practice and flashcard sections are independent */
+  .practice-section, .flashcard-section {
+    align-self: flex-start !important; /* Don't stretch to match other sections */
+    flex: 0 0 auto !important; /* Use natural size, don't flex */
+  }
+  
+  /* Ensure flashcards and practice sections don't clip */
+  .overflow-y-auto {
+    overflow: visible !important;
+    max-height: none !important;
+  }
+  
+  /* Fix flashcard content visibility */
+  .flashcard-content, .explainer-content {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    min-height: 150px !important;
+    overflow: visible !important;
+  }
+  
+  /* Ensure text is readable */
+  .flashcard-content p, .explainer-content p,
+  .flashcard-content div, .explainer-content div {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    margin: 0.5rem 0 !important;
+    padding: 0.25rem 0 !important;
+  }
+  
+  /* Target the specific practice problem container */
+  .practice-problem, .problem-statement {
+    overflow: visible !important;
+    max-width: 100% !important;
+    word-wrap: break-word !important;
+  }
+  
+  /* Fix the vector display area */
+  .vector-display, .vector-info {
+    overflow: visible !important;
+    max-width: 100% !important;
+    padding: 0.5rem !important;
+  }
+  
+  /* Ensure the live visualization area doesn't clip */
+  .live-visualization, .visualization-area {
+    overflow: visible !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    min-height: 250px !important;
+    padding: 0.5rem !important;
+  }
+  
+  /* Fix any grid or visualization clipping */
+  .grid, .visualization-container {
+    overflow: visible !important;
+    max-width: 100% !important;
+    padding: 0 1rem !important;
+  }
+  
+  /* Fix practice section container clipping */
+  .practice-section, .flashcard-section {
+    overflow: visible !important;
+    max-width: 100% !important;
+    padding: 0 1rem !important;
+  }
+  
+  /* Fix explainer/flashcard box sizing and text visibility */
+  .explainer-box, .flashcard-box, .explainer-container {
+    width: 100% !important;
+    height: 400px !important; /* Much taller to show content */
+    min-height: 400px !important;
+    max-height: 400px !important; /* Force taller height */
+    overflow: visible !important;
+    padding: 1.5rem !important;
+    margin: 1rem 0 !important;
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+    flex-shrink: 0 !important; /* Prevent shrinking */
+    flex-grow: 0 !important; /* Prevent growing */
+    position: relative !important; /* Ensure proper positioning */
+    z-index: 10 !important; /* Bring above other content */
+  }
+  
+  /* Target the actual Flashcard component from React */
+  .Flashcard, [class*="Flashcard"], [class*="flashcard"] {
+    height: 400px !important;
+    min-height: 400px !important;
+    max-height: 400px !important;
+    overflow: visible !important;
+  }
+  
+  /* Target the Flashcard container div */
+  .Flashcard > div, [class*="Flashcard"] > div, [class*="flashcard"] > div {
+    height: 400px !important;
+    min-height: 400px !important;
+    max-height: 400px !important;
+    overflow: visible !important;
+  }
+  
+  /* Target the content inside the flashcard */
+  .flex.h-full.flex-col.justify-between {
+    height: 100% !important;
+    min-height: 350px !important;
+    overflow-y: auto !important; /* Make it scrollable */
+    padding: 1rem !important;
+    max-height: 350px !important; /* Limit height to enable scrolling */
+  }
+  
+  /* Ensure the flashcard container allows scrolling */
+  .Flashcard > div, [class*="Flashcard"] > div, [class*="flashcard"] > div {
+    height: 400px !important;
+    min-height: 400px !important;
+    max-height: 400px !important;
+    overflow: hidden !important; /* Hide overflow on container */
+  }
+  
+  /* Target the actual content area that's being hidden */
+  .explainer-content, .flashcard-content, .explanation-content {
+    height: 350px !important; /* Tall enough to show content */
+    min-height: 350px !important;
+    max-height: 350px !important;
+    overflow: visible !important;
+    padding: 1rem !important;
+    margin: 0 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: rgba(255, 255, 255, 0.05) !important; /* Slight background to see the area */
+  }
+  
+  /* Force the flashcard section to have a fixed size */
+  .flashcard-section, .explainer-section {
+    height: auto !important;
+    min-height: 450px !important; /* Taller to accommodate the content box */
+    max-height: none !important;
+    flex: 0 0 auto !important; /* Don't flex, use natural size */
+    margin-bottom: 2rem !important; /* Space below the section */
+    position: relative !important;
+    z-index: 5 !important;
+  }
+  
+  /* Ensure proper spacing between flashcard and practice sections */
+  .flashcard-section + .practice-section,
+  .explainer-section + .practice-section {
+    margin-top: 2rem !important;
+    clear: both !important;
+  }
+  
+  /* Ensure text content is visible */
+  .explainer-text, .flashcard-text, .explanation-content {
+    overflow: visible !important;
+    max-width: 100% !important;
+    word-wrap: break-word !important;
+    white-space: normal !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+  }
+  
+  /* Fix any collapsed/expanded sections */
+  .collapsed-section, .expanded-section {
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
+  }
+  
+  /* Fix the specific visualization grid that's clipping */
+  .visualization-grid, .practice-visualization {
+    overflow: visible !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 300px !important;
+    padding: 1rem !important;
+    margin: 0 !important;
+  }
+  
+  /* Target the specific grid that's clipping at the bottom */
+  .grid, .coordinate-grid, .vector-grid {
+    height: auto !important;
+    min-height: 400px !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding-bottom: 2rem !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  /* Fix any fixed height containers */
+  [style*="height"], [style*="max-height"] {
+    height: auto !important;
+    max-height: none !important;
+  }
+  
+  /* Override the inline style calc(100% - 2rem) */
+  [style*="calc(100% - 2rem)"] {
+    height: 400px !important;
+    min-height: 400px !important;
+    max-height: 400px !important;
+  }
+  
+  /* Target any element with calc height */
+  [style*="calc"] {
+    height: 400px !important;
+    min-height: 400px !important;
+    max-height: 400px !important;
+  }
+  
+  /* Target the practice container specifically */
+  .practice-container, .practice-wrapper {
+    height: auto !important;
+    min-height: 500px !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding-bottom: 2rem !important;
+  }
+  
+  /* Ensure the canvas or SVG elements don't clip */
+  canvas, svg {
+    max-width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  
+  /* Fix any flex containers that might be causing clipping */
+  .flex-container, .grid-container {
+    overflow: visible !important;
+    max-width: 100% !important;
+    flex-wrap: wrap !important;
+  }
+  
+  /* Force all grid-related elements to be visible */
+  [class*="grid"], [class*="visualization"], [class*="practice"] {
+    height: auto !important;
+    min-height: 300px !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  
+  /* Target any div that might contain the grid */
+  div[class*="grid"], div[class*="visualization"] {
+    height: auto !important;
+    min-height: 350px !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding-bottom: 1rem !important;
+  }
+  
+  /* Optimize header spacing for portrait */
+  .header-container .flex.items-center.justify-between > div:first-child {
+    margin-right: 0.5rem !important;
+  }
+  
+  .header-container .flex.items-center.justify-between > div:last-child {
+    margin-left: 0.5rem !important;
+  }
+  
+  /* Fix store modal positioning on iPad portrait */
+  /* Store modal overlay */
+  .fixed.inset-0.z-50.flex.items-center.justify-center.bg-black\/80.backdrop-blur-md {
+    padding: 1rem !important;
+    align-items: flex-start !important;
+    padding-top: 0.25rem !important;
+  }
 }

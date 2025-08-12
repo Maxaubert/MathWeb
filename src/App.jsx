@@ -62,6 +62,7 @@ function Header({ coins, setCoins, ownedItems, setOwnedItems, activeBoosts, setA
   const [showDropdown, setShowDropdown] = useState(false);
   const [showStore, setShowStore] = useState(false);
   const [tooltipActive, setTooltipActive] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const tooltipHideTimeout = useRef(null);
 
    
@@ -96,7 +97,7 @@ function Header({ coins, setCoins, ownedItems, setOwnedItems, activeBoosts, setA
   const isOwned = (itemName) => ownedItems.includes(itemName);
    
   return (
-    <div className="px-8 pt-6">
+    <div className="px-8 pt-6 header-container">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="h-9 w-9 rounded-xl bg-white/20 backdrop-blur flex items-center justify-center"><Sparkles className="h-5 w-5" /></div>
@@ -104,7 +105,7 @@ function Header({ coins, setCoins, ownedItems, setOwnedItems, activeBoosts, setA
         </div>
         
         {/* Subject Navigation Bar - centered between logo and account */}
-        <nav className="flex items-center gap-16 -mt-1">
+        <nav className="flex items-center -mt-1 nav-items custom-nav-gap">
           {[
             { key: "2d-vectors", label: "2D Vectors", current: true },
             { key: "3d-vectors", label: "3D Vectors", current: false },
@@ -221,6 +222,19 @@ function Header({ coins, setCoins, ownedItems, setOwnedItems, activeBoosts, setA
               </div>
             )}
           </div>
+          
+          {/* Mobile Hamburger Menu Button */}
+          <button
+            className="hamburger-menu md:hidden"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle mobile menu"
+          >
+            <div className={`hamburger-button ${isMobileMenuOpen ? 'open' : ''}`}>
+              <div className="hamburger-line"></div>
+              <div className="hamburger-line"></div>
+              <div className="hamburger-line"></div>
+            </div>
+          </button>
         </div>
       </div>
 
@@ -361,6 +375,63 @@ function Header({ coins, setCoins, ownedItems, setOwnedItems, activeBoosts, setA
                </div>
             </motion.div>
           </motion.div>
+        )}
+      </AnimatePresence>
+      
+      {/* Mobile Navigation Slide-out Panel */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            {/* Backdrop overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="mobile-nav-backdrop"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+            
+            {/* Slide-out menu */}
+            <motion.div
+              initial={{ right: -300 }}
+              animate={{ right: 0 }}
+              exit={{ right: -300 }}
+              transition={{ duration: 0.3 }}
+              className="mobile-nav-menu open"
+            >
+              {/* Menu header */}
+              <div className="mobile-nav-header">
+                <h3 className="mobile-nav-title">Navigation</h3>
+                <button
+                  className="mobile-nav-close"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  aria-label="Close mobile menu"
+                >
+                  ×
+                </button>
+              </div>
+              
+              {/* Navigation items */}
+              <nav className="mobile-nav-items">
+                {[
+                  { key: "2d-vectors", label: "2D Vectors", current: true },
+                  { key: "3d-vectors", label: "3D Vectors", current: false },
+                  { key: "calculus", label: "Calculus", current: false },
+                  { key: "linear-algebra", label: "Linear Algebra", current: false },
+                  { key: "statistics", label: "Statistics", current: false }
+                ].map((subject) => (
+                  <a
+                    key={subject.key}
+                    href={`#${subject.key}`}
+                    className={`${subject.current ? 'active' : ''}`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {subject.label}
+                  </a>
+                ))}
+              </nav>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </div>
@@ -610,7 +681,7 @@ const CONCEPTS = [
 
 function ConceptPicker({ value, onChange }) {
   return (
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 concept-grid">
       {CONCEPTS.map((c) => (
         <button key={c.key} onClick={() => onChange(c.key)} className={`group flex items-center gap-3 rounded-xl border p-3 text-left transition ${value === c.key ? "border-white/30 bg-white/15" : "border-white/10 bg-white/5 hover:bg-white/10"}`}>
           <div className="rounded-lg bg-white/10 p-2">{c.icon}</div>
@@ -1112,7 +1183,7 @@ export default function App() {
            </div>
          </section>
         <section className="mb-8"><ConceptPicker value={conceptKey} onChange={setConceptKey} /></section>
-        <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <section className="grid grid-cols-1 gap-6 lg:grid-cols-2 main-panels">
           <Explainer concept={concept} showVis={showVis} />
           <div className="space-y-6">
             <Practice concept={concept} conceptKey={conceptKey} onResult={handleResult} showVis={showVis} setShowVis={setShowVis} />

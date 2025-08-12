@@ -830,6 +830,18 @@ button, .card {
   gap: 4rem; /* Default spacing (equivalent to gap-16) */
 }
 
+/* Hide BOOSTS ACTIVE capsule on all non-desktop devices */
+@media (max-width: 1366px) {
+  .header-container .flex.items-center.justify-between > div:last-child > div:nth-child(1) {
+    display: none !important;
+  }
+  
+  /* Hide NO BOOSTS capsule on all non-desktop devices */
+  .header-container .flex.items-center.justify-between > div:last-child > div:nth-child(2) {
+    display: none !important;
+  }
+}
+
 
 
 /* iPad Landscape Optimization - Target actual iPad dimensions */
@@ -900,13 +912,7 @@ button, .card {
   }
 }
 
-/* Additional specific targeting for your iPad dimensions */
-@media (min-width: 1180px) and (max-width: 1180px) {
-  .header-container .custom-nav-gap {
-    border: 3px solid lime !important; /* Green border for exact width match */
-    gap: 1.3rem !important;
-  }
-}
+
 
 /* Specific targeting for iPad Pro 11" Portrait (834px width) */
 @media (min-width: 834px) and (max-width: 834px) and (orientation: portrait) {

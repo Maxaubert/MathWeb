@@ -8,6 +8,13 @@ html, body {
   max-width: 100vw;
 }
 
+/* Header container - remove dark background */
+.header-container {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  border-bottom: none !important;
+}
+
 /* Fix mobile overscroll background */
 html {
   background: linear-gradient(160deg, #1b1026, #090612);
@@ -1395,7 +1402,7 @@ body::before {
 
 /* Target the main app container specifically */
 .min-h-screen.w-full.text-white.relative {
-  background: linear-gradient(160deg, #1b1026, #090612) !important;
+  background: transparent !important;
   overflow-x: hidden !important;
   overscroll-behavior: none !important;
   -webkit-overflow-scrolling: touch !important;
@@ -1403,7 +1410,7 @@ body::before {
 
 /* Ensure the main content area has proper background */
 main.mx-auto.max-w-\[85\%\].px-8.pb-20.pt-10 {
-  background: linear-gradient(160deg, #1b1026, #090612);
+  background: transparent;
   overflow-x: hidden;
 }
 
@@ -1415,7 +1422,7 @@ html, body, #root, main, section, div:not([class*="bg-"]) {
 
 /* Ensure all sections maintain the dark background */
 section {
-  background: linear-gradient(160deg, #1b1026, #090612);
+  background: transparent;
 }
 
 /* Fix for any potential white backgrounds in cards or containers */

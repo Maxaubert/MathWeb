@@ -1172,7 +1172,7 @@ export default function App() {
 
 
   return (
-         <div className="min-h-screen w-full text-white relative" style={{ background: "radial-gradient(1200px 600px at 10% -10%, rgba(186,104,200,0.4), transparent 60%), radial-gradient(1200px 600px at 110% 10%, rgba(124,77,255,0.35), transparent 60%), linear-gradient(160deg, #1b1026, #090612)" }}>
+         <div className="min-h-screen w-full text-white relative">
       <motion.div className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-white/10 blur-3xl" animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 6 }} />
                                                                                                                <Header coins={coins} setCoins={setCoins} ownedItems={ownedItems} setOwnedItems={setOwnedItems} activeBoosts={activeBoosts} setActiveBoosts={setActiveBoosts} />
              <main className="mx-auto max-w-[85%] px-8 pb-20 pt-10">

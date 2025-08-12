@@ -1408,7 +1408,8 @@ main.mx-auto.max-w-\[85\%\].px-8.pb-20.pt-10 {
 }
 
 /* Prevent any white background from showing in scrollable areas */
-* {
+/* Only target elements that might have white backgrounds, not all elements */
+html, body, #root, main, section, div:not([class*="bg-"]) {
   background-color: transparent !important;
 }
 
@@ -1420,6 +1421,20 @@ section {
 /* Fix for any potential white backgrounds in cards or containers */
 .bg-white\/10, .bg-white\/5, .bg-white\/20 {
   background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Preserve store modal glass effect */
+.fixed.inset-0.z-50.flex.items-center.justify-center.bg-black\/80.backdrop-blur-md {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+/* Preserve store modal container glass effect */
+.bg-white\/10.backdrop-blur-md {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
 }
 
 /* Prevent overscroll on touch devices */
